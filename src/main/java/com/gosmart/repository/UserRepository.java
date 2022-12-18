@@ -1,5 +1,7 @@
 package com.gosmart.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +16,5 @@ import com.gosmart.repository.entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Integer>
 {
 	public UserEntity findByEmailIdAndPassword(String emailId,String password);
+	public Optional<UserEntity> getUsers(Integer UserId);
 }

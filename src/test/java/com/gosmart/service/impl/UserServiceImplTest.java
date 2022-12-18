@@ -3,6 +3,8 @@ package com.gosmart.service.impl;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import javax.annotation.meta.When;
 
 import org.junit.Test;
@@ -43,6 +45,8 @@ public class UserServiceImplTest
 		when(repository.save(userEntity)).thenThrow(NullPointerException.class);
 		service.insertUser(userEntity);				
 	}
+	
+	
 	@Test
 	public void testGetUser()throws Exception
 	{
@@ -61,4 +65,23 @@ public class UserServiceImplTest
 		when(repository.findByEmailIdAndPassword(emailId, password)).thenThrow(NullPointerException.class);
 		service.getUser(emailId, password);
 	}
+	
+	
+	@Test
+	public void testGetUsers()throws Exception
+	{
+		Integer userId=1;
+		 Optional<UserEntity> userEntity=Mockito.any();
+		 when(repository.findById(userId)).thenReturn(userEntity);
+		 Optional<UserEntity> userEntity2=service.getUsers(userId);
+	}
+	@Test(expected = GoSmartException.class)
+	public void testGetUsers_Exception()throws Exception
+	{
+		Integer userId=1;
+		when(repository.findById(userId)).thenThrow(NullPointerException.class);
+		service.getUsers(userId);
+	}
+	
+	
 }

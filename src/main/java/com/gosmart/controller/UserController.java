@@ -1,14 +1,18 @@
 package com.gosmart.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gosmart.constants.UserConstants;
+import com.gosmart.exception.GoSmartException;
 import com.gosmart.repository.entity.UserEntity;
 import com.gosmart.service.UserService;
 
@@ -65,5 +69,21 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	@PostMapping
+	public ResponseEntity<UserEntity> getUserId(@PathVariable Integer userId)
+	{
+		log.info("{}-UserController getUser() started",UserConstants.USER);
+		try 
+		{
+			log.info("{}-UserController getUser() saving userDetails in repository",UserConstants.USER);
+			Optional<UserEntity> entity=userService.getUsers(userId);
+			return new ResponseEntity<UserEntity>(HttpStatus.OK);
+		}
+		catch (Exception e) 
+		{
+			log.error("{}-UserController getUser() exception occured-{}",UserConstants.USER,e.getMessage());
+			throw new GoSmartException(e.getMessage());
 
+		}
+	}
 }

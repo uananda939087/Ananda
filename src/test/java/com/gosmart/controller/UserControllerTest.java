@@ -3,11 +3,13 @@ package com.gosmart.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -57,6 +59,26 @@ public class UserControllerTest
 		ResponseEntity<UserEntity>response=userController.getUser(userEntity);
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 	}
+	
+	
+	@Test
+	public void testGetUserId() throws Exception
+	{
+		Integer userId=1;
+		Optional<UserEntity> userEntity=Mockito.any();
+		when(userService.getUsers(userId)).thenReturn(userEntity);
+		ResponseEntity<UserEntity> responseEntity=userController.getUserId(userId);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	@Test
+	public void testGetUserId_Exception() throws Exception
+	{
+		Integer userId=1;		
+		when(userService.getUsers(userId)).thenThrow(NullPointerException.class);
+		ResponseEntity<UserEntity> response=userController.getUserId(userId);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	}
+	
 	
 	
 }

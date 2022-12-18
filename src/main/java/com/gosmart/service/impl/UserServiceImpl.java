@@ -1,5 +1,7 @@
 package com.gosmart.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService
-{
+{	
 	@Autowired
 	private  UserRepository userRepository;
 	/**
@@ -73,5 +75,19 @@ public class UserServiceImpl implements UserService
 		}
 		return userEntity;
 	}
-
+	@Override
+	public Optional<UserEntity> getUsers(Integer UserId)
+	{
+		log.info("{}-ServiceImpl getUsers() saving userDetails in repository",UserConstants.USER);
+		
+		Optional<UserEntity> userEntity=null;
+		try {
+			log.info("{}-ServiceImpl getUsers() saving userDetails in repository",UserConstants.USER);
+			userEntity=userRepository.findById(UserId);
+		} catch (Exception e) {
+			log.error("{}-Serviceimpl getUsers() exception occured-{}",UserConstants.USER,e.getMessage());
+			throw new GoSmartException(e.getMessage());
+		}
+		return userEntity;
+	}					
 }
