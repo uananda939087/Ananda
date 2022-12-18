@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,19 +70,19 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	@PostMapping
-	public ResponseEntity<UserEntity> getUserId(@PathVariable Integer userId)
+	@GetMapping("/users/users/userId")
+	public ResponseEntity<UserEntity> getUsers(@PathVariable Integer userId)
 	{
-		log.info("{}-UserController getUser() started",UserConstants.USER);
+		log.info("{}-UserController getUsers() started",UserConstants.USER);
 		try 
 		{
-			log.info("{}-UserController getUser() saving userDetails in repository",UserConstants.USER);
-			Optional<UserEntity> entity=userService.getUsers(userId);
-			return new ResponseEntity<UserEntity>(HttpStatus.OK);
+			log.info("{}-UserController getUsers() saving userDetails in repository",UserConstants.USER);
+			UserEntity user=userService.getUsers(userId);
+			return new ResponseEntity<>(user,HttpStatus.OK);
 		}
 		catch (Exception e) 
 		{
-			log.error("{}-UserController getUser() exception occured-{}",UserConstants.USER,e.getMessage());
+			log.error("{}-UserController getUsers() exception occured-{}",UserConstants.USER,e.getMessage());
 			throw new GoSmartException(e.getMessage());
 
 		}

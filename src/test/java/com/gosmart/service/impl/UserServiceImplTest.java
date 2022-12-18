@@ -71,15 +71,15 @@ public class UserServiceImplTest
 	public void testGetUsers()throws Exception
 	{
 		Integer userId=1;
-		 Optional<UserEntity> userEntity=Mockito.any();
-		 when(repository.findById(userId)).thenReturn(userEntity);
-		 Optional<UserEntity> userEntity2=service.getUsers(userId);
+		UserEntity userEntity=new UserEntity();
+		 when(repository.findByUserId(userId)).thenReturn(userEntity);
+		userEntity=service.getUsers(userId);
 	}
 	@Test(expected = GoSmartException.class)
 	public void testGetUsers_Exception()throws Exception
 	{
 		Integer userId=1;
-		when(repository.findById(userId)).thenThrow(NullPointerException.class);
+		when(repository.findByUserId(userId)).thenThrow(NullPointerException.class);
 		service.getUsers(userId);
 	}
 	

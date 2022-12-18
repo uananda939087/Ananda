@@ -16,5 +16,5 @@ import com.gosmart.repository.entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Integer>
 {
 	public UserEntity findByEmailIdAndPassword(String emailId,String password);
-	public Optional<UserEntity> getUsers(Integer UserId);
+	public UserEntity findByUserId(Integer UserId);
 }

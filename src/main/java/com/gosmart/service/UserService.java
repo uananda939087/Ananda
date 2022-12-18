@@ -12,5 +12,5 @@ public interface UserService
 {
 	public Integer insertUser(UserEntity userEntity);
 	public UserEntity getUser(String emailId,String password);
-	public Optional<UserEntity> getUsers(Integer UserId);
+	public UserEntity getUsers(Integer UserId);
 }

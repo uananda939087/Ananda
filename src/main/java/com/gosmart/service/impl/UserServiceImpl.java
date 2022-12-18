@@ -76,14 +76,14 @@ public class UserServiceImpl implements UserService
 		return userEntity;
 	}
 	@Override
-	public Optional<UserEntity> getUsers(Integer UserId)
+	public UserEntity getUsers(Integer UserId)
 	{
 		log.info("{}-ServiceImpl getUsers() saving userDetails in repository",UserConstants.USER);
 		
-		Optional<UserEntity> userEntity=null;
+		UserEntity userEntity=null;
 		try {
 			log.info("{}-ServiceImpl getUsers() saving userDetails in repository",UserConstants.USER);
-			userEntity=userRepository.findById(UserId);
+			userEntity=userRepository.findByUserId(UserId);
 		} catch (Exception e) {
 			log.error("{}-Serviceimpl getUsers() exception occured-{}",UserConstants.USER,e.getMessage());
 			throw new GoSmartException(e.getMessage());
