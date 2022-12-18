@@ -13,7 +13,11 @@ import com.gosmart.repository.entity.UserEntity;
 import com.gosmart.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
-
+/**
+ * <h1>UserController</h1>
+ * @author Ananda
+ *
+ */
 @RestController
 @Slf4j
 @RequestMapping("/api/v1")
@@ -25,15 +29,38 @@ public class UserController {
 	public ResponseEntity<Integer> insertUser(@RequestBody UserEntity userEntity)
 	{
 		log.info("{}-UserController insertUser() started",UserConstants.USER);
-		try {
+		try 
+		{
 			
 						
 			log.info("{}-UserController insertUser() saving userDetails in repository",UserConstants.USER);
 			
 			Integer userId=userService.insertUser(userEntity);
-			return new ResponseEntity(userId,HttpStatus.CREATED);
-		} catch (Exception e) {
+			return new ResponseEntity<>(userId,HttpStatus.CREATED);
+		} 
+		catch (Exception e) 
+		{
 			log.error("{}-UserController insertUser() exception occured-{}",UserConstants.USER,e.getMessage());
+			
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping("/user/login")
+	public ResponseEntity<UserEntity> getUser(@RequestBody UserEntity userEntity)
+	{
+		log.info("{}-UserController getUser() started",UserConstants.USER);
+		try {
+			
+						
+			log.info("{}-UserController getUser() saving userDetails in repository",UserConstants.USER);
+			
+			UserEntity user=userService.getUser(userEntity.getEmailId(), userEntity.getPassword());
+			return new ResponseEntity<>(user,HttpStatus.OK);
+		} 
+		catch (Exception e) 
+		{
+			log.error("{}-UserController getUser() exception occured-{}",UserConstants.USER,e.getMessage());
 			
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

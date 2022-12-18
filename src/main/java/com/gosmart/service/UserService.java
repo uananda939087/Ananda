@@ -9,5 +9,6 @@ import com.gosmart.repository.entity.UserEntity;
 public interface UserService 
 {
 	public Integer insertUser(UserEntity userEntity);
+	public UserEntity getUser(String emailId,String password);
 	
 }

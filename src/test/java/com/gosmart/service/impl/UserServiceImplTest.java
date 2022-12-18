@@ -29,6 +29,7 @@ public class UserServiceImplTest
 	@Test
 	public void testInsertUser() throws Exception
 	{
+		
 		UserEntity userEntity=new UserEntity();
 		UserEntity userEntity2=Mockito.any();
 		when(repository.save(userEntity)).thenReturn(userEntity2);
@@ -41,5 +42,23 @@ public class UserServiceImplTest
 		UserEntity userEntity=new UserEntity();		
 		when(repository.save(userEntity)).thenThrow(NullPointerException.class);
 		service.insertUser(userEntity);				
+	}
+	@Test
+	public void testGetUser()throws Exception
+	{
+		String emailId="emailId";
+		String password="password";
+		UserEntity userEntity=new UserEntity();
+		when(repository.findByEmailIdAndPassword(emailId, password)).thenReturn(userEntity);
+		UserEntity entity=service.getUser(emailId, password);
+		assertNotNull(entity);		
+	}
+	@Test(expected = GoSmartException.class)
+	public void testGetUser_Exception() throws Exception
+	{
+		String emailId="emailId";
+		String password="password";
+		when(repository.findByEmailIdAndPassword(emailId, password)).thenThrow(NullPointerException.class);
+		service.getUser(emailId, password);
 	}
 }

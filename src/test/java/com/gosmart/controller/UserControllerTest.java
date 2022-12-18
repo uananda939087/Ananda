@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.gosmart.repository.UserRepository;
+
 import com.gosmart.repository.entity.UserEntity;
 import com.gosmart.service.UserService;
 
@@ -40,5 +40,23 @@ public class UserControllerTest
 		ResponseEntity<Integer>	response=userController.insertUser(userEntity);
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 	}
+	@Test
+	public void testGetUser() throws Exception
+	{
+		UserEntity userEntity=new UserEntity();
+		UserEntity user=new UserEntity();
+		when(userService.getUser("1", "2")).thenReturn(user);
+		ResponseEntity<UserEntity>response=userController.getUser(userEntity);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	@Test
+	public void testGetUser_Exception() throws Exception
+	{
+		UserEntity userEntity=new UserEntity();
+		when(userService.getUser(userEntity.getEmailId(), userEntity.getPassword())).thenThrow(NullPointerException.class);
+		ResponseEntity<UserEntity>response=userController.getUser(userEntity);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	}
+	
 	
 }

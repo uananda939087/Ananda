@@ -56,5 +56,22 @@ public class UserServiceImpl implements UserService
 		}
 		return userId;
 	}
+	@Override
+	public UserEntity getUser(String emailId, String password)
+	{
+		log.info("{}-ServiceImpl getUser() saving userDetails in repository",UserConstants.USER);
+		UserEntity userEntity=null;
+		try 
+		{
+			log.info("{}-ServiceImpl getUser() saving userDetails in repository",UserConstants.USER);
+			userEntity=userRepository.findByEmailIdAndPassword(emailId, password);
+		} 
+		catch (Exception e)
+		{
+			log.error("{}-Serviceimpl getUser() exception occured-{}",UserConstants.USER,e.getMessage());
+			throw new GoSmartException(e.getMessage());
+		}
+		return userEntity;
+	}
 
 }
