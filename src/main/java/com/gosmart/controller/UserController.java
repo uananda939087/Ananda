@@ -83,7 +83,8 @@ public class UserController {
 		catch (Exception e) 
 		{
 			log.error("{}-UserController getUsers() exception occured-{}",UserConstants.USER,e.getMessage());
-			throw new GoSmartException(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			
 
 		}
 	}
